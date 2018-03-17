@@ -20,34 +20,48 @@ from numpy import *
 
 filename = './tmdb_5000_movies.csv'
 data = pd.read_csv(filename)
+
+#remove the ones with budget = 0
 data = data[data.budget!=0]
+data = data[data.revenue!=0]
 
 def regressionNum():
-    numdtypes = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
     
+    #Select the Columns that ONLY Use NUMBERS
+    numdtypes = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
     numdata = data.select_dtypes(include=numdtypes)
+    
+    
+    #Remove the id column. It's useless for us
     numdata = numdata.drop(['id'], axis=1)
+    
+    #print all the columns that have numerical data
     print(list(numdata))
+    
+    #Command Prompt asking for input
     columnDep = input("Please type Dependent Variable:")
     
+    #print the p-value correlation
     corr = numdata[numdata.columns[0:]].corr()[columnDep]
     corr = corr.drop([columnDep])
     print(corr);
-    scm(numdata)
     
+    
+    #print the scatter-plot for all the columns
+    scm(numdata)
     plt.show()
     
-    
+    #Command Prompt asking for input
     columnInd = input("Please type the Independent Variable column: ")
     
     
     
-    
+    #Run Linear Analysis
     x = numdata[columnInd]
     y = numdata[columnDep]
     model = sm.OLS(y, x).fit()
-    
     print(model.summary())
+
 
 def monthRegression():
     
