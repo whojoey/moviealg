@@ -66,11 +66,18 @@ def regressionNum():
 def monthRegression():
     
     data['release_date'] = pd.to_datetime(data['release_date'], format="%Y-%m-%d")
-    datedata = data.loc[:,['release_date', 'revenue', 'popularity']]
     
-    #for key,value in datedata.iteritems():
-    #    print (key,value)
+    month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
     
-#monthRegression()
-
-regressionNum()
+    ListMonth = {i: data.loc[data['release_date'].dt.month == (month.index(i)+1)] for i in month}
+    
+    print (ListMonth["Dec"])
+    
+    
+    #dateJan = data.loc[data['release_date'].dt.month == 1]
+    #datedata = data.loc[:,['release_date', 'revenue', 'popularity']]
+    #print(dateJanuary)
+    
+    
+monthRegression()
+#regressionNum()
