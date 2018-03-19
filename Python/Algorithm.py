@@ -71,13 +71,31 @@ def monthRegression():
     
     ListMonth = {i: data.loc[data['release_date'].dt.month == (month.index(i)+1)] for i in month}
     
-    print (ListMonth["Dec"])
+    #print (ListMonth["Feb"]["revenue"])
+    
+    meanrevenue = []
+    y_pos = np.arange(len(month))
+        
+    
+    
+    for mon, val in ListMonth.items():
+        meanrevenue.append(val["revenue"].mean())
+        print(mon, val["revenue"].mean())
+    
+    
+    fig = plt.figure()
+    plt.bar(y_pos, meanrevenue, align='center', alpha=0.5)
+    plt.xticks(y_pos, month)
+    plt.ylabel("Mean Revenue")
+    plt.title("The Months with Most Revenue")
+    plt.show()
     
     
     #dateJan = data.loc[data['release_date'].dt.month == 1]
     #datedata = data.loc[:,['release_date', 'revenue', 'popularity']]
     #print(dateJanuary)
-    
+ 
     
 monthRegression()
+
 #regressionNum()
