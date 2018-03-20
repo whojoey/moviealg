@@ -65,25 +65,35 @@ def regressionNum():
 
 def monthRegression():
     
+    #Converts the release date into DATE DATATYPE
     data['release_date'] = pd.to_datetime(data['release_date'], format="%Y-%m-%d")
     
+    #Create an Array that just has all the Month names
     month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
     
+    #Pull the actually release date from the data set(Read CSV) and MATCH the month. Then STORE
+    # it into List Month which is a DICT data structure
     ListMonth = {i: data.loc[data['release_date'].dt.month == (month.index(i)+1)] for i in month}
     
+    
+    # Use this command to see the month
     #print (ListMonth["Feb"]["revenue"])
     
+    
+    #Below this is all the code to create the bar charts
     meanrevenue = []
     y_pos = np.arange(len(month))
         
     
-    
+    #Add the Mean of the Revenues of EACH Month into the Mean Revenue array and also print the result
+    #Out
     for mon, val in ListMonth.items():
         meanrevenue.append(val["revenue"].mean())
         print(mon, val["revenue"].mean())
     
     
-    fig = plt.figure()
+    #Begin producing the bar graph
+    plt.figure()
     plt.bar(y_pos, meanrevenue, align='center', alpha=0.5)
     plt.xticks(y_pos, month)
     plt.ylabel("Mean Revenue")
