@@ -17,20 +17,71 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from pandas.plotting import scatter_matrix as scm
 from numpy import *
+import ast
 
-filename = './tmdb_5000_movies.csv'
-data = pd.read_csv(filename)
+def load_csv_json(file_path):
+    frame = pd.read_csv(file_path)
+    
+    json_columns = ['keywords', 'genres', 'production_companies', 'production_countries', 'spoken_languages']
+
+    for column in json_columns:
+    
+        frame[column] = frame[column].apply(lambda x: np.nan if pd.isnull(x) else ast.literal_eval(x))
+    
+    return frame
+
+
+data = load_csv_json('./tmdb_5000_movies.csv')
 
 #remove the ones with budget = 0
 data = data[data.budget!=0]
 data = data[data.revenue!=0]
+
+    
+
+
+def popularityGenre():
+    
+    #Create a Dict to store genres
+    genre_pop = {}
+    
+    #Create loop that runs through the shape of it
+    for i in range(data.shape[0]):
+        #Run through all of the genre JSON field
+        for item in data['genres'][i]:
+            #WITHIN JSON find the KEY NAME and make sure the POPULARITY is not NOT A NUMBER
+            if 'name' in item and data.iloc[i]['popularity'] is not np.nan:
+                
+                #ASSIGN the GENRE first to a
+                a = item['name']
+                #ASSIGN to b
+                b = float(data.iloc[i]['popularity'])
+                
+                #If that genre exists in genre_pop then add the popularity and count
+                if a in genre_pop:
+                    genre_pop[a]['popularity'] += b 
+                    genre_pop[a]['count'] += 1
+                #else create an entry with it
+                else:
+                    genre_pop[a] = {}
+                    genre_pop[a]['genre'] = a
+                    genre_pop[a]['popularity'] = b
+                    genre_pop[a]['count'] = 0
+    
+    #Create the average/mean of the popularity                
+    for i in genre_pop: 
+        genre_pop[i]['popularity']/=genre_pop[i]['count']
+        
+    print(genre_pop)
+    
+#UNCOMMENT HERE TO RUN    
+popularityGenre()
 
 def regressionNum():
     
     #Select the Columns that ONLY Use NUMBERS
     numdtypes = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
     numdata = data.select_dtypes(include=numdtypes)
-    
     
     #Remove the id column. It's useless for us
     numdata = numdata.drop(['id'], axis=1)
@@ -62,6 +113,8 @@ def regressionNum():
     model = sm.OLS(y, x).fit()
     print(model.summary())
 
+#regressionNum()
+
 
 def monthRegression():
     
@@ -77,7 +130,7 @@ def monthRegression():
     
     
     # Use this command to see the month
-    #print (ListMonth["Feb"]["revenue"])
+    #print (ListMonth["Feb"])
     
     
     #Below this is all the code to create the bar charts
@@ -89,7 +142,7 @@ def monthRegression():
     #Out
     for mon, val in ListMonth.items():
         meanrevenue.append(val["revenue"].mean())
-        print(mon, val["revenue"].mean())
+        #print(mon, val["revenue"].mean())
     
     
     #Begin producing the bar graph
@@ -101,11 +154,11 @@ def monthRegression():
     plt.show()
     
     
+    #This was just used to test my commands
     #dateJan = data.loc[data['release_date'].dt.month == 1]
     #datedata = data.loc[:,['release_date', 'revenue', 'popularity']]
     #print(dateJanuary)
  
-    
-monthRegression()
+#UNCOMMENT HERE TO RUN
+#monthRegression()
 
-#regressionNum()
