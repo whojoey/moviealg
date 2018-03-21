@@ -20,7 +20,7 @@ from numpy import *
 import ast
 
 def load_csv_json(file_path):
-    frame = pd.read_csv(file_path)
+    frame = pd.read_csv(file_path, dtype='unicode')
     
     json_columns = ['keywords', 'genres', 'production_companies', 'production_countries', 'spoken_languages']
 
@@ -31,8 +31,8 @@ def load_csv_json(file_path):
     return frame
 
 
-data = load_csv_json('./tmdb_5000_movies.csv')
-
+data= pd.read_csv('./tmdb_5000_movies.csv')
+    
 #remove the ones with budget = 0
 data = data[data.budget!=0]
 data = data[data.revenue!=0]
@@ -41,7 +41,8 @@ data = data[data.revenue!=0]
 
 
 def popularityGenre():
-    
+    data = load_csv_json('./tmdb_5000_movies.csv')
+
     #Create a Dict to store genres
     genre_pop = {}
     
@@ -79,6 +80,7 @@ popularityGenre()
 
 def regressionNum():
     
+    
     #Select the Columns that ONLY Use NUMBERS
     numdtypes = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
     numdata = data.select_dtypes(include=numdtypes)
@@ -113,6 +115,7 @@ def regressionNum():
     model = sm.OLS(y, x).fit()
     print(model.summary())
 
+#UNCOMMENT TO RUN
 #regressionNum()
 
 
