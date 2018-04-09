@@ -1,0 +1,19 @@
+
+Numerical 
+
+Budget
+Release Date
+Revenue
+IMDB
+Rotten
+MetaC
+
+
+Qualitative 
+
+Genres
+Title
+Original Title
+Cast (Actor)
+Crew (Director)
+
