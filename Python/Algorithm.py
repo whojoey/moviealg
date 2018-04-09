@@ -31,11 +31,8 @@ def load_csv_json(file_path):
     return frame
 
 
-data= pd.read_csv('./tmdb_5000_movies.csv')
-    
+data = load_csv_json('./tmdb_5000_movies.csv')
 #remove the ones with budget = 0
-data = data[data.budget!=0]
-data = data[data.revenue!=0]
 
     
 
@@ -80,6 +77,8 @@ def popularityGenre():
 
 def simpleregressNum():
     
+    data = pd.read_csv('./tmdb_5000_train.csv')
+    datatest = pd.read_csv('./tmdb_5000_test.csv')    
     
     #Select the Columns that ONLY Use NUMBERS
     numdtypes = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
@@ -116,8 +115,7 @@ def simpleregressNum():
     print(model.summary())
 
 #UNCOMMENT TO RUN
-#regressionNum()
-
+#simpleregressNum()
 
 
 def multipleregress():
@@ -125,41 +123,21 @@ def multipleregress():
     #IDEAL IS FOR THE INDEPENDENT VARIABLE TO BE CORRELATED WITH THE DEPENDENT VARIABLE BUT NOT 
     #WITH EACH OTHER
     #Select the Columns that ONLY Use NUMBERS
-    numdtypes = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
-    numdata = data.select_dtypes(include=numdtypes)
+    dataTrain = pd.read_csv('./tmdb_5000_train.csv')
+    dataTest = pd.read_csv('./tmdb_5000_test.csv')    
     
-    #Remove the id column. It's useless for us
-    numdata = numdata.drop(['id'], axis=1)
+    x_train = dataTrain[['budget', 'popularity', 'vote_count']].values.reshape(-1,3)
+    y_train = dataTrain['revenue']
     
-    #print all the columns that have numerical data
-    print(list(numdata))
-    
-    #Command Prompt asking for input
-    columnDep = input("Please type Dependent Variable:")
-    
-    #print the p-value correlation
-    corr = numdata[numdata.columns[0:]].corr()[columnDep]
-    corr = corr.drop([columnDep])
-    print(corr);
-    
-    
-    #print the scatter-plot for all the columns
-    scm(numdata)
-    plt.show()
-    
-    #Command Prompt asking for input
-    columnInd = input("Please type the Independent Variable column: ")
-    
-    
-    
-    #Run Linear Analysis
-    x = numdata[columnInd]
-    y = numdata[columnDep]
-    model = sm.OLS(y, x).fit()
-    print(model.summary())
+    x_test = dataTest[['budget', 'popularity', 'vote_count']].values.reshape(-1,3)
+    y_test = dataTest['revenue']
 
+    ols = LinearRegression()
+    model = ols.fit(x_train, y_train)
+    
+    print(model.predict(x_test)[0:10])
 #UNCOMMENT TO RUN
-regressionNum()
+multipleregress()
 
 
 
@@ -208,4 +186,50 @@ def monthRegression():
  
 #UNCOMMENT HERE TO RUN
 #monthRegression()
+
+
+def castpull():
+
+    data = load_csv_json('./tmdb_5000_credits.csv')
+    
+    #Converts the release date into DATE DATATYPE
+    data['cast'] 
+    #Create an Array that just has all the Month names
+    month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+    
+    #Pull the actually release date from the data set(Read CSV) and MATCH the month. Then STORE
+    # it into List Month which is a DICT data structure
+    ListMonth = {i: data.loc[data['release_date'].dt.month == (month.index(i)+1)] for i in month}
+    
+    
+    # Use this command to see the month
+    #print (ListMonth["Feb"])
+    
+    
+    #Below this is all the code to create the bar charts
+    meanrevenue = []
+    y_pos = np.arange(len(month))
+        
+    
+    #Add the Mean of the Revenues of EACH Month into the Mean Revenue array and also print the result
+    #Out
+    for mon, val in ListMonth.items():
+        meanrevenue.append(val["revenue"].mean())
+        #print(mon, val["revenue"].mean())
+    
+    
+    #Begin producing the bar graph
+    plt.figure()
+    plt.bar(y_pos, meanrevenue, align='center', alpha=0.5)
+    plt.xticks(y_pos, month)
+    plt.ylabel("Mean Revenue")
+    plt.title("The Months with Most Revenue")
+    plt.show()
+    
+    
+    #This was just used to test my commands
+    #dateJan = data.loc[data['release_date'].dt.month == 1]
+    #datedata = data.loc[:,['release_date', 'revenue', 'popularity']]
+    #print(dateJanuary)
+ 
 

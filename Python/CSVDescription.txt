@@ -1,16 +1,19 @@
 
 Numerical 
 
-Budget
-Release Date
-Revenue
+Budget - revenue, vote_count
+Revenue - Budget, Vote_Count, Popularity 
 IMDB
 Rotten
 MetaC
+Popularity - vote_count, revenue, 
+Vote_Count - popularity, budget, revenue
+
 
 
 Qualitative 
 
+Release Date
 Genres
 Title
 Original Title
