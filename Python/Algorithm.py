@@ -19,7 +19,7 @@ from pandas.plotting import scatter_matrix as scm
 from numpy import *
 import ast
 
-def load_csv_json(file_path):
+def load_movie_json(file_path):
     frame = pd.read_csv(file_path, dtype='unicode')
     
     json_columns = ['keywords', 'genres', 'production_companies', 'production_countries', 'spoken_languages']
@@ -31,14 +31,26 @@ def load_csv_json(file_path):
     return frame
 
 
-data = load_csv_json('./tmdb_5000_movies.csv')
+def load_credits_json(file_path):
+    frame = pd.read_csv(file_path, dtype='unicode')
+    
+    json_columns = ['cast', 'crew']
+
+    for column in json_columns:
+    
+        frame[column] = frame[column].apply(lambda x: np.nan if pd.isnull(x) else ast.literal_eval(x))
+    
+    return frame
+
+
+data = load_movie_json('./tmdb_5000_movies.csv')
 #remove the ones with budget = 0
 
     
 
 
 def popularityGenre():
-    data = load_csv_json('./tmdb_5000_movies.csv')
+    data = load_movie_json('./tmdb_5000_movies.csv')
 
     #Create a Dict to store genres
     genre_pop = {}
@@ -188,48 +200,28 @@ def monthRegression():
 #monthRegression()
 
 
-def castpull():
+def castcrewpull():
 
-    data = load_csv_json('./tmdb_5000_credits.csv')
+    data = load_credits_json('./tmdb_5000.csv')
     
-    #Converts the release date into DATE DATATYPE
-    data['cast'] 
+     
+    count=0
     #Create an Array that just has all the Month names
-    month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
-    
-    #Pull the actually release date from the data set(Read CSV) and MATCH the month. Then STORE
-    # it into List Month which is a DICT data structure
-    ListMonth = {i: data.loc[data['release_date'].dt.month == (month.index(i)+1)] for i in month}
-    
-    
-    # Use this command to see the month
-    #print (ListMonth["Feb"])
-    
-    
-    #Below this is all the code to create the bar charts
-    meanrevenue = []
-    y_pos = np.arange(len(month))
+    for i in range(data.shape[0]):
+        #Run through all of the genre JSON field
         
+        firstSevenActors = {index: item['name'] for index, item in enumerate(data['cast'][i]) if index < 7}
     
-    #Add the Mean of the Revenues of EACH Month into the Mean Revenue array and also print the result
-    #Out
-    for mon, val in ListMonth.items():
-        meanrevenue.append(val["revenue"].mean())
-        #print(mon, val["revenue"].mean())
-    
-    
-    #Begin producing the bar graph
-    plt.figure()
-    plt.bar(y_pos, meanrevenue, align='center', alpha=0.5)
-    plt.xticks(y_pos, month)
-    plt.ylabel("Mean Revenue")
-    plt.title("The Months with Most Revenue")
-    plt.show()
-    
-    
-    #This was just used to test my commands
-    #dateJan = data.loc[data['release_date'].dt.month == 1]
-    #datedata = data.loc[:,['release_date', 'revenue', 'popularity']]
-    #print(dateJanuary)
- 
+        data['cast'][i] = firstSevenActors
+                
+                
+        for item in data['crew'][i]:
+            if item['job'] == 'Director':
+                data['crew'][i] = item['name']
+                
+                
+    data.to_csv('./tmdb_5000.csv', index=False, index_label=False)
+
+        
+#castcrewpull()
 
