@@ -13,12 +13,14 @@ def createProduction(myTitle, myDate, myGenre, myBudget, myRevenue):
 
     with open('future_movies.csv', 'a', newline='') as f:
     
-        thewriter = csv.writer(f)
-    #fieldnames = ["original_title", "release_date", "budget", "revenue", "genres"] #mine 
+        fieldnames = ["original_title", "release_date", "budget", "revenue", "genres"] #mine 
   #  thewriter.writerow(['title', 'date', 'budget', 'revenue', 'genre'])
-        thewriter.writerow([myTitle, myDate, myGenre, myBudget, myRevenue])
+ 
+        thewriter = csv.DictWriter(f, fieldnames=fieldnames, delimiter = '\t')  
         
+        thewriter.writerow({"original_title": myTitle,"release_date": myDate,"budget": myBudget, "revenue": myRevenue, "genres": myGenre})
         
+# End of Function 
         
 print ("Create New Movie? Y/N or Yes/No")
 response = input()
@@ -32,7 +34,6 @@ if response.lower() in ['y', 'yes']:
     myGenre = input("\nGenre: ")
     myBudget = input("\nBudget: ")
     myRevenue = input("\nRevenue: ")
-    
     createProduction(myTitle, myDate, myGenre, myBudget, myRevenue)
 
 
@@ -44,7 +45,7 @@ if response.lower() in ['y', 'yes']:
     
 
 
-
+# Prints saved file 
 with open('future_movies.csv') as file:
     reader = csv.reader(file, delimiter='\t')
     for row in reader:
