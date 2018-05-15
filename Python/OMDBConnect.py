@@ -12,7 +12,42 @@ import csv
 import re
 import time
 
+
+import numpy as np
+from scipy import stats
+from sklearn import svm
+from matplotlib import style
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression
+from sklearn.pipeline import Pipeline
+import numpy as np
+
+
+# use seaborn plotting defaults
+import seaborn as sns; sns.set()
+
+
+
 batchNum = 50
+
+dataRev = pd.read_csv('./tmdb_5000_movies.csv')
+df1 = pd.read_csv('./tmdb_5000_movies.csv')
+df2 = pd.read_csv('./tmdb_5000_credits.csv')
+
+with open('merged.csv', 'w') as output:
+    pd.merge(df1, df2, on='id').to_csv(output, index=False, index_label=False)
+
+
+def Perc2Float(x):
+    return float(x.strip('%'))/100
+def ChangeFloat(x):
+    try:
+        return float(x)
+    except ValueError:
+        num, denom = x.split('/')
+        return float(num) / float(denom)
+
+
 
 def findempty():
     data = pd.read_csv('./tmdb_5000_test.csv')
@@ -81,3 +116,28 @@ for i in range(findempty(), findempty()+ batchNum):
 
 data2.to_csv('./tmdb_5000_test.csv', index=False)
         
+        
+        
+
+
+def castcrewpull():
+
+    data = load_credits_json('./tmdb_5000.csv')
+    
+     
+    count=0
+    #Create an Array that just has all the Month names
+    for i in range(data.shape[0]):
+        #Run through all of the genre JSON field
+        
+        firstSevenActors = {index: item['name'] for index, item in enumerate(data['cast'][i]) if index < 7}
+    
+        data['cast'][i] = firstSevenActors
+                
+                
+        for item in data['crew'][i]:
+            if item['job'] == 'Director':
+                data['crew'][i] = item['name']
+                
+                
+    data.to_csv('./tmdb_5000.csv', index=False, index_label=False)

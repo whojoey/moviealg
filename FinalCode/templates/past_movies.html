@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<style>
+    .dataFrame table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .dataFrame th, td {
+        text-align: center;
+        padding: 8px;
+    }
+
+
+
+</style>
+
+
+<div class="container" style="text-align:center;">
+    <h1>Enter Movie Title to Show Raw Database Details</h1>
+    <form method="POST" id="srch" class="well form-horizontal">
+        <div class="form-group">
+            <label class="col-md-4 control-label">Title</label>
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-font"></i></span>
+                    <input type="text" name="title" id="title" class="form-control" placeholder="Title">
+                </div>
+            </div>
+        </div>
+
+    <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <div id="display" class="dataFrame" style="display:none;"></div>
+    <div id="display2" style="display:none;"></div>
+    <div id="display3" class="dataFrame" style="display:none;"></div>
+    <div id="display4" class="dataFrame" style="display:none;"></div>
+
+</div>
+
+
+    {% endblock %}

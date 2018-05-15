@@ -1,0 +1,279 @@
+body {
+  background-color: whitesmoke;
+}
+.solid {
+  background-color: whitesmoke;
+  padding: 100px;
+  margin-bottom: 50px;
+}
+.column {
+    float: left;
+    width: 33.33%;
+    text-align: center;
+}
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.title {
+    font-family: 'Tajawal', serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 34px;
+    margin-bottom: 0;
+}
+.desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.00;
+    letter-spacing: -.004em;
+    margin-top: 3px;
+}
+h2 {
+    font-size: 15px;
+    font-style: normal;
+    font-weight: bold;
+}
+p {
+    display: block;
+    font-size: 18px;
+    line-height: 1.58;
+    letter-spacing: -.004em;
+    margin:30px 30px 0 0;
+}
+.em {
+    font-style: italic;
+}
+section {
+    font-size: 16px;
+    margin:0px 0px 0px 20px;
+}
+.joeUl {
+    -webkit-columns: 4;
+    columns: 4;
+    -moz-columns: 4;
+    list-style-type: none;
+}
+li.Cam:before {
+    content: url({{url_for('static', filename='img/cambullet.png')}});font-size: 10px;
+}
+
+
+#hero-container {
+  position: relative;
+  text-align: center;
+  color: white;
+  height: 150px;
+}
+.hero-container {
+  color: white;
+}
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.hero-img {
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
+.prof-img {
+  width: 40%;
+  border-radius: 100px;
+}
+.team-section-header {
+  text-align: center;
+}
+.copy-fa {
+  font-size: 50px;
+  float: right;
+  padding: 40px;
+}
+.jumbotron {
+  border-radius: 0px!important;
+  padding: 50px 200px 50px 200px;
+}
+.predict {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: whitesmoke;
+}
+.seen {
+  display: block!important;
+}
+.no-show {
+  display: none;
+}
+#banner {
+padding: 8em 0 9em 0;
+background-image: url(https://heimkino-partner.de/wp-content/uploads/2016/12/gui-zappiti-movie-wall-en-1920x1080.jpg);
+background-size: cover;
+background-position: bottom;
+background-attachment: fixed;
+background-repeat: no-repeat;
+text-align: center;
+position: relative;
+margin-left: 0px;
+}
+#banner:before {
+content: '';
+background: rgba(75, 75, 93, 0.85);
+position: absolute;
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+}
+#banner .inner {
+position: relative;
+z-index: 10005;
+padding-top: 8em;
+}
+#banner h1 {
+font-size: 3.5em;
+font-weight: 400;
+color: #fff;
+line-height: 1em;
+margin: 0 0 1em 0;
+padding: 0;
+}
+#banner h3 {
+font-weight: 400;
+color: #fff;
+margin: 0;
+font-size: 1.5em;
+}
+#banner .icon {
+color: #6cc091;
+font-size: 2em;
+}
+#banner p {
+font-size: 1em;
+color: rgba(255, 255, 255, 0.55);
+margin-bottom: 1.75em;
+}
+#banner .flex {
+-ms-flex-pack: center;
+-moz-justify-content: center;
+-webkit-justify-content: center;
+-ms-justify-content: center;
+justify-content: center;
+text-align: center;
+margin: 0 auto 4em auto;
+}
+#banner .flex div {
+ border-right: 2px solid rgba(255, 255, 255, 0.2);
+ padding: 0 8em;
+}
+ #banner .flex div:last-child {
+   border: none;
+   padding-right: 0;
+ }
+ #banner .flex div:first-child {
+   padding-left: 0;
+ }
+ #banner .flex div p {
+   margin: 0;
+ }
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+#banner {
+ background-attachment: scroll;
+}
+}
+@media screen and (max-width: 1680px) {
+#banner .flex div {
+ padding: 0 6em;
+}
+}
+@media screen and (max-width: 1280px) {
+#banner {
+ padding: 7em 0 6em 0;
+}
+ #banner .inner {
+   padding-top: 6em;
+ }
+ #banner h1 {
+   font-size: 3em;
+ }
+ #banner h3 {
+   font-size: 1.25em;
+ }
+ #banner .flex div {
+   padding: 0 3em;
+ }
+}
+@media screen and (max-width: 980px) {
+#banner {
+ background-attachment: scroll;
+ padding: 5em 0 4em 0;
+}
+ #banner .inner {
+   padding-top: 4em;
+ }
+ #banner h1 {
+   font-size: 2.5em;
+ }
+ #banner h3 {
+   font-size: 1.25em;
+ }
+ #banner .flex div {
+   font-size: .85em;
+   padding: 0 1.5em;
+ }
+}
+@media screen and (max-width: 736px) {
+#banner {
+ padding: 4em 0 3em 0;
+}
+ #banner .inner {
+   padding-top: 3em;
+ }
+ #banner h1 {
+   font-size: 2em;
+ }
+ #banner h3 {
+   font-size: 1.25em;
+ }
+ #banner .flex {
+   -moz-flex-direction: column;
+   -webkit-flex-direction: column;
+   -ms-flex-direction: column;
+   flex-direction: column;
+   margin: 0 auto 2em auto;
+ }
+   #banner .flex div {
+     font-size: .85em;
+     padding: 0;
+     border: none;
+     margin-bottom: 1em;
+   }
+}
+@media screen and (max-width: 480px) {
+#banner h1 {
+ font-size: 1.5em;
+}
+}
+.footer {
+background-color: black;
+color: white;
+padding: 20px;
+}
+* {
+letter-spacing: 1px;
+}
+.navbar {
+letter-spacing: 1.5px!important;
+font-size: 16px;
+}
+.dropdown-menu {
+font-size: 20px;
+}
+
+#myCarousel {
+  height: 450px;
+}

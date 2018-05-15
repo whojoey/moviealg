@@ -1,0 +1,105 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<!-- Top menu on small screens -->
+<header class="w3-container w3-top w3-hide-large w3-black w3-xlarge w3-padding">
+  <a href="javascript:void(0)" class="w3-button w3-black w3-margin-right" onclick="w3_open()">☰</a>
+  <span>Revenue Algorithm</span>
+</header>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:100px; margin-right:40px">
+
+  <!-- Header -->
+  <div class="w3-container" style="margin-top:80px" id="showcase">
+    <h1 class="w3-jumbo" style="color: #089de3"><b>What Makes a Successful Movie?</b></h1>
+    <h1 class="w3-xxxlarge"><b>4 Main Ingredients:</b></h1>
+    <hr style="border:1.5px solid #089de3" class="w3-round">
+  </div>
+
+  <!-- Photo grid (modal) -->
+    <div class="w3-half" style="width: 100%; padding-left:0!important; padding-bottom: 100px;">
+      <h3 style="font-weight: bold; color: #089de3;">Budget</h3>
+        <p style="margin: 15px;">While not always the case, the more money you have to throw into your project, the better your returns will be. However, some of the most successful movies had very limited budgets but still resulted in sizable revenue.</p>
+      <h3 style="font-weight: bold; color: #089de3;">Genre</h3>
+        <p style="margin: 15px;">The genre of your movie determines who will watch your fill. Some genres are universally loved, while some only attract a certain type of crowd.</p>
+      <h3 style="font-weight: bold; color: #089de3;">Popularity</h3>
+        <p style="margin: 15px;">Our data generates a popularity index based on the buzz that is created within social media about your project.</p>
+      <h3 style="font-weight: bold; color: #089de3;">Vote Count</h3>
+        <p style="margin: 15px;">How many people vote for your movie is a strong indication of popularity and thus, return on investment. Largely bad reviews and votes will hurt your potential.</p>
+    </div>
+
+    <div class="w3-row-padding w3-grayscale">
+      <h1 style="text-align: center; margin-bottom: 20px;">Our Team</h1>
+      <div class="w3-col m4 w3-margin-bottom">
+        <div class="w3-light-grey">
+          <img src="/static/img/jaeho.jpg" style="height: 100%; width: 100%; border-radius: 200px;">
+          <div class="w3-container">
+            <h5 style="text-align: center;">Jaeho Park</h5>
+          </div>
+        </div>
+      </div>
+      <div class="w3-col m4 w3-margin-bottom">
+        <div class="w3-light-grey">
+          <img src="/static/img/jojo.jpg" style="height: 100%; width: 100%; border-radius: 200px;">
+          <div class="w3-container">
+            <h5 style="text-align: center;">Joseph Hu</h5>
+          </div>
+        </div>
+      </div>
+      <div class="w3-col m4 w3-margin-bottom">
+        <div class="w3-light-grey">
+          <img src="/static/img/jamahl.jpg"  style="height: 100%; width: 100%; border-radius: 200px;">
+          <div class="w3-container">
+            <h5 style="text-align: center;">Jamahl Reynolds</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+<!-- End page content -->
+</div>
+
+<script>
+// Script to open and close sidebar
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+}
+
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
+}
+</script>
+<!--
+<div class="jumbotron">
+
+<h1 style="text-align: center"> What Makes a Movie Successful? </h1>
+<div class="jumbotron">
+  <h3 style="font-weight: bold">Budget<span class="copy-fa"><i class="fas fa-dollar-sign"></i></span></h3>
+    <p>While not always the case, the more money you have to throw into your project, the better your returns will be. However, some of the most successful movies had very limited budgets but still resulted in sizable revenue.</p>
+  <h3 style="font-weight: bold">Genre<span class="copy-fa"><i class="fas fa-film"></i></span></h3>
+    <p>The genre of your movie determines who will watch your fill. Some genres are universally loved, while some only attract a certain type of crowd.</p>
+  <h3 style="font-weight: bold">Popularity<span class="copy-fa"><i class="fas fa-bolt"></i></span></h3>
+    <p>Our data generates a popularity index based on the buzz that is created within social media about your project.</p>
+  <h3 style="font-weight: bold">Vote Count<span class="copy-fa"><i class="fas fa-comments"></i></span></h3>
+    <p>How many people vote for your movie is a strong indication of popularity and thus, return on investment. Largely bad reviews and votes will hurt your potential.</p>
+</div> -->
+
+
+{% endblock %}

@@ -1,0 +1,247 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+
+
+<style>
+    .dataFrame table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .dataFrame th, td {
+        text-align: left;
+        padding: 8px 8px 8px 50px;
+    }
+
+    .dataFrame tr:nth-child(even){background-color: #f2f2f2}
+
+    .dataFrame th {
+        background-color: black;
+        color: white;
+    }
+</style>
+
+<div class="container predict">
+  <div class="container" style="text-align:center;">
+    <h4> <span> Welcome {{session.username}} </span></h4>
+    <a href="#" id="show-instructions">How to Use</a>
+    <div class="container">
+      <p class="no-show" id="instructions">Enter a budget, select a genre, forecasted popularity, and expected vote count.</p>
+    </div>
+    <script>
+    $(document).ready(function(){
+      $('#show-instructions').click(function() {
+        $('#instructions').toggleClass('seen');
+      });
+    });
+    </script>
+    <h2>The Average Revenue for all Movies is: {{ revAvg }}</h2>
+
+
+
+
+      <h1>Linear Regression</h1>
+    <form class="well form-horizontal" method="POST" id="lin">
+        <div class="form-group">
+            <label class="col-md-4 control-label">Budget</label>
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                    <input class="form-control" type="number" id ="namequery" onchange="set2Decimal(this)" min="0" max="99999999999" step="0.01" placeholder="budget">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" >Genre</label>
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-open"></i></span>
+                    <select id="genrequery" class="form-control selectpicker">
+                        <option value="Action">Action</option>
+                        <option value="Horror">Horror</option>
+                        <option value="Mystery">Mystery</option>
+                        <option value="Romance">Romance</option>
+                        <option value="History">History</option>
+                        <option value="Family">Family</option>
+                        <option value="Science Fiction">Science Fiction</option>
+                        <option value="Crime">Crime</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Fantasy">Fantasy</option>
+                        <option value="Animation">Animation</option>
+                        <option value="Music">Music</option>
+                        <option value="Adventure">Adventure</option>
+                        <option value="Foreign">Foreign</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Documentary">Documentary</option>
+                        <option value="War">War</option>
+                        <option value="Thriller">Thriller</option>
+                        <option value="Western">Western</option>
+                    </select>
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Popularity</label>
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-heart"></i></span>
+                    <input type="number" class="form-control" id ="popquery" onchange="set2Decimal(this)" min=0 max=880 placeholder="popularity">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Star Actor/Actress</label>
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-star"></i></span>
+                    <input type="text" class="form-control" id ="actor" placeholder="Star Actor/Actress">
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">TMDB Vote Count</label>
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-ok"></i></span>
+                    <input type="number" class="form-control" id ="votequery" min=0 max=14000 placeholder="vote count">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Release Date</label>
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                    <input type="date" id ="releaseD" class="form-control" placeholder="Release Date">
+                </div>
+            </div>
+        </div>
+
+
+
+        <button type="submit" class="btn btn-primary">Predict</button>
+    </form>
+  </div>
+
+      <div id="dispAnswer" class="dataFrame" style="display:none;"></div>
+
+
+  <div class="container" style="text-align:center;">
+    <h1>Non-Linear Regression</h1>
+    <form method="POST" id="nonlin" class="well form-horizontal">
+
+            <div class="form-group">
+                <label class="col-md-4 control-label">Budget</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                        <input type="number" class="form-control" id ="budg" onchange="set2Decimal(this)" min="0" max="99999999999" step="0.01" placeholder="budget">
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+            <label class="col-md-4 control-label" >Genre</label>
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-open"></i></span>
+                    <select id="genre" class="form-control selectpicker">
+                        <option value="Action">Action</option>
+                        <option value="Horror">Horror</option>
+                        <option value="Mystery">Mystery</option>
+                        <option value="Romance">Romance</option>
+                        <option value="History">History</option>
+                        <option value="Family">Family</option>
+                        <option value="Science Fiction">Science Fiction</option>
+                        <option value="Crime">Crime</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Fantasy">Fantasy</option>
+                        <option value="Animation">Animation</option>
+                        <option value="Music">Music</option>
+                        <option value="Adventure">Adventure</option>
+                        <option value="Foreign">Foreign</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Documentary">Documentary</option>
+                        <option value="War">War</option>
+                        <option value="Thriller">Thriller</option>
+                        <option value="Western">Western</option>
+                    </select>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Popularity</label>
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-heart"></i></span>
+                    <input type="number" class="form-control" id ="popul" onchange="set2Decimal(this)" min=0 max=880 placeholder="popularity">
+                </div>
+            </div>
+        </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label">Star Actor/Actress</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-star"></i></span>
+                        <input type="text" class="form-control" id ="star" placeholder="Star Actor/Actress">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label">TMDB Vote Count</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-ok"></i></span>
+                        <input type="number" class="form-control" id ="voteq" min=0 max=14000 placeholder="vote count">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">Release Date</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                        <input type="date" class="form-control" id ="release" placeholder="Release Date">
+                    </div>
+                </div>
+            </div>
+        <button type="submit" class="btn btn-primary">Predict</button>
+    </form>
+        <div id="dispAns" class="dataFrame" style="display:none;"></div>
+
+
+
+
+
+
+  </div>
+
+    <div class="container" style="text-align:center;">
+        <h1>Our Linear Regression Error</h1>
+        <button type="submit" id="LinError" class="btn btn-primary">Calculate using the Database</button>
+
+        <div id="LinErr" class="dataFrame" style="display:none;"></div>
+    </div>
+
+
+
+    <div class="container" style="text-align:center;">
+      <h1>Why Random Forest is Not a Solution</h1>
+        <button type="submit" id="randomF" class="btn btn-primary">Calculate using the Database</button>
+
+        <div id="randF" class="dataFrame" style="display:none;"></div>
+    </div>
+
+{% endblock %}

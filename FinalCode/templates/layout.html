@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>Movie Algorithm</title>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/printRes.js') }}"></script>
+    <link href="{{ url_for('static', filename='style/main.css') }}" rel="stylesheet">
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond|Tajawal" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<style>
+body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
+body {font-size:16px;}
+.w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
+.w3-half img:hover{opacity:1}
+
+a:hover {
+   text-decoration: none;
+}
+
+body {
+  background-color: whitesmoke;
+}
+.solid {
+  background-color: whitesmoke;
+  padding: 100px;
+  margin-bottom: 50px;
+}
+.column {
+    float: left;
+    width: 33.33%;
+    text-align: center;
+}
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.title {
+    font-family: 'Tajawal', serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 34px;
+    margin-bottom: 0;
+}
+.desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.00;
+    letter-spacing: -.004em;
+    margin-top: 3px;
+}
+h2 {
+    font-size: 15px;
+    font-style: normal;
+    font-weight: bold;
+}
+p {
+    display: block;
+    font-size: 18px;
+    line-height: 1.58;
+    letter-spacing: -.004em;
+    margin:30px 30px 0 0;
+}
+.em {
+    font-style: italic;
+}
+section {
+    font-size: 16px;
+    margin:0px 0px 0px 20px;
+}
+.joeUl {
+    list-style: disc outside none;
+}
+li.Cam:before {
+    content: url({{url_for('static', filename='img/cambullet.png')}});font-size: 10px;
+
+}
+#hero-container {
+  position: relative;
+  text-align: center;
+  color: white;
+  height: 150px;
+}
+.hero-container {
+  color: white;
+}
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.hero-img {
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
+.prof-img {
+  width: 40%;
+  border-radius: 100px;
+}
+.team-section-header {
+  text-align: center;
+}
+.copy-fa {
+  font-size: 50px;
+  float: right;
+  padding: 40px;
+}
+.jumbotron {
+  border-radius: 0px!important;
+  padding: 50px 200px 50px 200px;
+}
+.predict {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: whitesmoke;
+}
+.seen {
+  display: block!important;
+}
+.no-show {
+  display: none;
+}
+#banner {
+padding: 8em 0 9em 0;
+background-image: url(https://heimkino-partner.de/wp-content/uploads/2016/12/gui-zappiti-movie-wall-en-1920x1080.jpg);
+background-size: cover;
+background-position: bottom;
+background-attachment: fixed;
+background-repeat: no-repeat;
+text-align: center;
+position: relative;
+margin-left: 0px;
+}
+#banner:before {
+content: '';
+background: rgba(75, 75, 93, 0.85);
+position: absolute;
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+}
+#banner .inner {
+position: relative;
+z-index: 10005;
+padding-top: 8em;
+}
+#banner h1 {
+font-size: 3.5em;
+font-weight: 400;
+color: #fff;
+line-height: 1em;
+margin: 0 0 1em 0;
+padding: 0;
+}
+#banner h3 {
+font-weight: 400;
+color: #fff;
+margin: 0;
+font-size: 1.5em;
+}
+#banner .icon {
+color: #6cc091;
+font-size: 2em;
+}
+#banner p {
+font-size: 1em;
+color: rgba(255, 255, 255, 0.55);
+margin-bottom: 1.75em;
+}
+#banner .flex {
+-ms-flex-pack: center;
+-moz-justify-content: center;
+-webkit-justify-content: center;
+-ms-justify-content: center;
+justify-content: center;
+text-align: center;
+margin: 0 auto 4em auto;
+}
+#banner .flex div {
+ border-right: 2px solid rgba(255, 255, 255, 0.2);
+ padding: 0 8em;
+}
+ #banner .flex div:last-child {
+   border: none;
+   padding-right: 0;
+ }
+ #banner .flex div:first-child {
+   padding-left: 0;
+ }
+ #banner .flex div p {
+   margin: 0;
+ }
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+#banner {
+ background-attachment: scroll;
+}
+}
+@media screen and (max-width: 1680px) {
+#banner .flex div {
+ padding: 0 6em;
+}
+}
+@media screen and (max-width: 1280px) {
+#banner {
+ padding: 7em 0 6em 0;
+}
+ #banner .inner {
+   padding-top: 6em;
+ }
+ #banner h1 {
+   font-size: 3em;
+ }
+ #banner h3 {
+   font-size: 1.25em;
+ }
+ #banner .flex div {
+   padding: 0 3em;
+ }
+}
+@media screen and (max-width: 980px) {
+#banner {
+ background-attachment: scroll;
+ padding: 5em 0 4em 0;
+}
+ #banner .inner {
+   padding-top: 4em;
+ }
+ #banner h1 {
+   font-size: 2.5em;
+ }
+ #banner h3 {
+   font-size: 1.25em;
+ }
+ #banner .flex div {
+   font-size: .85em;
+   padding: 0 1.5em;
+ }
+}
+@media screen and (max-width: 736px) {
+#banner {
+ padding: 4em 0 3em 0;
+}
+ #banner .inner {
+   padding-top: 3em;
+ }
+ #banner h1 {
+   font-size: 2em;
+ }
+ #banner h3 {
+   font-size: 1.25em;
+ }
+ #banner .flex {
+   -moz-flex-direction: column;
+   -webkit-flex-direction: column;
+   -ms-flex-direction: column;
+   flex-direction: column;
+   margin: 0 auto 2em auto;
+ }
+   #banner .flex div {
+     font-size: .85em;
+     padding: 0;
+     border: none;
+     margin-bottom: 1em;
+   }
+}
+@media screen and (max-width: 480px) {
+#banner h1 {
+ font-size: 1.5em;
+}
+}
+.footer {
+background-color: black;
+color: white;
+padding: 20px;
+}
+* {
+letter-spacing: 1px;
+}
+.navbar {
+letter-spacing: 1.5px!important;
+font-size: 16px;
+}
+.dropdown-menu {
+font-size: 20px;
+}
+
+#myCarousel {
+  height: 450px;
+}
+
+* {box-sizing:border-box}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Hide the images by default */
+.mySlides {
+    display: none;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+.w3-light-grey {
+  padding: 55px;
+}
+
+.menu-item:hover {
+  background-color: white;
+  color: black!important;
+}
+
+.answer-cont {
+  padding-left: 150px;
+}
+
+</style>
+</head>
+<body>
+{% include 'partials/_navbar.html' %}
+<div class="container">
+    {% include 'partials/_messages.html' %}
+</div>
+<div style="padding-left: 250px;">
+{% block body %}{% endblock %}
+</div>
+<script>
+    $( ".alert" ).fadeOut( 2000, function() {
+        // Animation complete.
+    });
+
+    function set2Decimal(input) {
+        input.value = parseFloat(input.value).toFixed(2);
+    }
+
+    function set1Decimal(input) {
+        input.value = parseFloat(input.value).toFixed(1);
+    }
+
+</script>
+
+</body>
+</html>
